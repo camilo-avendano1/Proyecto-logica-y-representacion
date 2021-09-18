@@ -1,4 +1,4 @@
-class Cell(){
+class Cell{
     constructor(x,y){
         this.x = x;
         this.y = y;
@@ -11,5 +11,6 @@ class Cell(){
     draw(){
         ctx.strokeStyle = "black";
         ctx.strokeRect(this.x, this.y, this.width, this.height);
+
     }
 }

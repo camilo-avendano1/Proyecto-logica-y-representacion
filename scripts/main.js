@@ -15,16 +15,19 @@ const controlsBar = {
 }
 function createGrid(){               //bucle para dibujar casillas
     for (let y = cellSize; y < canvas.height; y += cellSize) {
-        for (let x = 0; x <canvas.width; x += cellSize){
+        for (let x = 0; x < canvas.width; x += cellSize){
             gameGrid.push(new Cell(x,y));
         }
     }
+}
+createGrid();                           //dibujamos las casillas
 function handleGameGrid (){
-    for (let i= 0; i <gameGrid.length; i++){
+    for (let i = 0; i < gameGrid.length; i++){
         gameGrid[i].draw();
     }
 }
-}
+handleGameGrid();
+console.log(gameGrid)
 //proyectiles
 //defensa
 //enemigos
