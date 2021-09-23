@@ -8,7 +8,10 @@ const cellSize = 100;
 const cellGap = 3;
 const gameGrid = [];
 const defenders = [];
+const enemies = [];
 let numberOfResources = 300;
+const enemyPositions = [];
+let frame = 0;
 
 
 // escuchador de mouse
@@ -70,6 +73,18 @@ function handleDefefenders(){
     }
 }
 //enemigos
+
+function handleEnemies(){
+    for (let i = 0; i < enemies.length; i++){
+        enemies[i].update();
+        enemies[i].draw();
+    }
+    if (frame % 100 === 0) {
+        let verticalPosition = Math.floor(Math.random()* 5 + 1 )* cellSize;
+        enemies.push(new Enemy(verticalPosition));
+        enemyPositions.push(verticalPosition);
+    }
+}
 //recursos
 //utilidades
 function handleGameStatus(){
@@ -85,7 +100,12 @@ function animate(){
     ctx.fillRect(0,0, controlsBar.width, controlsBar.height);
     handleGameGrid();
     handleDefefenders();
+    handleEnemies()
     handleGameStatus();
+
+    ctx.fillText("resources: " + numberOfResources, 20,55);
+    frame++;
+    console.log(frame);
     requestAnimationFrame(animate);
 }
 animate();

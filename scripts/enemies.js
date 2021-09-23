@@ -21,5 +21,5 @@ class Enemy{
         ctx.font = "20px Arial";
         ctx.fillText(Math.floor(this.health),this.x,this.y); 
     }
-    }
+    
 }
