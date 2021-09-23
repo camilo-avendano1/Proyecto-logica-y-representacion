@@ -1,16 +1,14 @@
-class Cell{
-    constructor(x,y){
+class Cell {
+    constructor(x, y){
         this.x = x;
         this.y = y;
         this.width = cellSize;
         this.height = cellSize;
-
     }
-
-    //metodos
     draw(){
-        ctx.strokeStyle = "black";
-        ctx.strokeRect(this.x, this.y, this.width, this.height);
-
+        if (mouse.x && mouse.y && collision(this, mouse)){
+            ctx.strokeStyle = 'black';
+            ctx.strokeRect(this.x, this.y, this.width, this.height);
+        }
     }
 }
