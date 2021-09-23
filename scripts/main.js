@@ -8,7 +8,8 @@ const cellSize = 100;
 const cellGap = 3;
 const gameGrid = [];
 const defenders = [];
-let defendersCost = 100;
+let numberOfResources = 300;
+
 
 // escuchador de mouse
 const mouse = {
@@ -52,7 +53,19 @@ function handleGameGrid(){
 //defensa
 canvas.addEventListener("click", function(){
     const gridPositionX = mouse.x - (mouse.x % cellSize);
-})
+    const gridPositionY = mouse.y - (mouse.y % cellSize);
+    if (gridPositionY < cellSize) return;
+    let defendersCost = 100;
+    if (numberOfResources > defendersCost) {
+        defenders.push(new Defender(gridPositionX, gridPositionY));
+        numberOfResources -= defendersCost;
+    }
+});
+function handleDefefenders(){
+    for (let i = 0; i < defenders.length; i++){
+        defenders[i].draw();
+    }
+}
 //enemigos
 //recursos
 //utilidades
@@ -62,6 +75,7 @@ function animate(){
     ctx.fillStyle = "blue";
     ctx.fillRect(0,0, controlsBar.width, controlsBar.height);
     handleGameGrid();
+    handleDefefenders();
     requestAnimationFrame(animate);
 }
 animate();

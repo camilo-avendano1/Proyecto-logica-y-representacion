@@ -14,6 +14,6 @@ class Defender{
         ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = "gold";
         ctx.font = "20px Arial";
-        ctx.fillText(Math.floor(this.health),this.x,this.y); 
+        ctx.fillText(Math.floor(this.health),this.x + 15,this.y + 30); 
     }
 }
