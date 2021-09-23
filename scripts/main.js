@@ -50,6 +50,9 @@ function handleGameGrid(){
 
 //proyectiles
 //defensa
+canvas.addEventListener("click", function(){
+    const gridPositionX = mouse.x - (mouse.x % cellSize);
+})
 //enemigos
 //recursos
 //utilidades
