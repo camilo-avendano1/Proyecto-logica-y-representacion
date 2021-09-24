@@ -11,7 +11,10 @@ const defenders = [];
 const enemies = [];
 let numberOfResources = 300;
 const enemyPositions = [];
+let enemiesInterval = 600;
 let frame = 0;
+let gameOver = false;
+const projectiles = [];
 
 
 // escuchador de mouse
@@ -53,6 +56,20 @@ function handleGameGrid(){
 
 
 //proyectiles
+
+function handleProjectiles(){
+    for (let i = 0; i < projectiles.length; i++) {
+        projectiles[i].update();
+        projectiles[i].draw();
+        
+        if (projectiles[i] && projectiles[i].x > canvas.width - cellSize){
+            projectiles.splice(i, 1);
+            i--;
+        }
+        console.log ("proyectiles ", projectiles.length)
+    }
+}
+
 //defensa
 canvas.addEventListener("click", function(){
     const gridPositionX = mouse.x - (mouse.x % cellSize);
@@ -67,30 +84,51 @@ canvas.addEventListener("click", function(){
         numberOfResources -= defendersCost;
     }
 });
-function handleDefefenders(){
+function handleDefenders(){
     for (let i = 0; i < defenders.length; i++){
         defenders[i].draw();
+        defenders[i].update();
+        for (let j = 0; j < enemies.length; j++) {
+            if (collision(defenders[i], enemies[j])){
+                enemies[j].movement = 0;
+                defenders[i].health -= 1;
+            }
+            if (defenders[i] && defenders[i].health <= 0){
+                defenders.splice(i, 1);
+                i--;
+                enemies[j].movement = enemies[j].speed;
+            }
+        }
     }
 }
 //enemigos
-
+//generador  de enemigos
 function handleEnemies(){
     for (let i = 0; i < enemies.length; i++){
         enemies[i].update();
         enemies[i].draw();
+        if (enemies[i].x < 0){
+            gameOver = true;
+        }
     }
-    if (frame % 100 === 0) {
+    if (frame % enemiesInterval === 0) {//intervalos que se gnera el enemigo
         let verticalPosition = Math.floor(Math.random()* 5 + 1 )* cellSize;
         enemies.push(new Enemy(verticalPosition));
         enemyPositions.push(verticalPosition);
+        if (enemiesInterval > 120) enemiesInterval -= 25;
     }
 }
 //recursos
 //utilidades
 function handleGameStatus(){
     ctx.fillStyle = "Gold";
-    ctx.font = "30 px Arial";
+    ctx.font = "30px Stick No Bills";
     ctx.fillText("resources: " + numberOfResources, 20,55);
+    if (gameOver){
+        ctx.fillStyle = "black";
+        ctx.font = "90px Stick No Bills";
+        ctx.fillText("GAME OVER", 153, 330);
+    }
 }
 
 
@@ -99,17 +137,17 @@ function animate(){
     ctx.fillStyle = "blue";
     ctx.fillRect(0,0, controlsBar.width, controlsBar.height);
     handleGameGrid();
-    handleDefefenders();
-    handleEnemies()
+    handleDefenders();
+    handleProjectiles();
+    handleEnemies();
     handleGameStatus();
 
     ctx.fillText("resources: " + numberOfResources, 20,55);
     frame++;
     console.log(frame);
-    requestAnimationFrame(animate);
+     if (!gameOver) requestAnimationFrame(animate);
 }
 animate();
-
 
 function collision(first, second){
     if (    !(  first.x > second.x + second.width ||

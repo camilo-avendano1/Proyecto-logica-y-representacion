@@ -18,8 +18,8 @@ class Enemy{
         ctx.fillStyle = "gray";
         ctx.fillRect(this.x,this.y,this.width,this.height);
         ctx.fillStyle = "red";
-        ctx.font = "20px Arial";
-        ctx.fillText(Math.floor(this.health),this.x,this.y); 
+        ctx.font = "45px Stick No Bills";
+        ctx.fillText(Math.floor(this.health),this.x + 15,this.y + 30); 
     }
     
 }

@@ -13,7 +13,13 @@ class Defender{
         ctx.fillStyle = "blue";
         ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = "gold";
-        ctx.font = "20px Arial";
+        ctx.font = "20px Stick No Bills";
         ctx.fillText(Math.floor(this.health),this.x + 15,this.y + 30); 
+    }
+    update(){
+         this.timer++;
+         if (this.timer % 100 === 0){
+             projectiles.push(new Projectile(this.x, this.y))
+         }
     }
 }
