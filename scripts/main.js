@@ -148,7 +148,7 @@ function handleEnemies(){
 }
 //recursos
 function handleRecursos(){
-    if (frame % 500 === 0 && score < winningScore){
+    if (frame % 400 === 0 ){
         
         recursos.push(new Monedas());
     }
