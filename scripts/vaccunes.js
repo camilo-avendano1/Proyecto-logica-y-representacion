@@ -4,7 +4,7 @@ class Defender{
         this.y = y;
         this.width = cellSize - cellGap * 2;
         this.height = cellSize - cellGap * 2;
-        this.shooting = true;
+        this.shooting = false;
         this.health = 100;
         this.projectiles = [];
         this.timer = 0;
@@ -17,13 +17,23 @@ class Defender{
         ctx.fillText(Math.floor(this.health),this.x + 15,this.y + 30); 
     }
     update(){
-        if (this.shooting){
+  
             this.timer++;
             if (this.timer % 100 === 0){
                 projectiles.push(new Projectile(this.x + 70, this.y + 50));
             }
-        } else {
-            this.timer = 0;
-        }
+        
     }
+    // update(){
+    //     if (this.shooting){
+    //         console.log("se supone dispara ");
+    //         this.timer++;
+    //         if (this.timer % 100 === 0){
+    //             projectiles.push(new Projectile(this.x + 70, this.y + 50));
+                
+    //         }
+    //     } else {
+    //         this.timer = 0;
+    //     }
+    // }
 }

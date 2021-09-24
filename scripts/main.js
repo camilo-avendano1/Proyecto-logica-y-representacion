@@ -4,6 +4,7 @@ canvas.width = 900;
 canvas.height = 600;
 
 //variables globales
+const amounts = [20,30,40];
 const cellSize = 100;
 const cellGap = 3;
 const gameGrid = [];
@@ -16,6 +17,8 @@ let frame = 0;
 let gameOver = false;
 const projectiles = [];
 let score = 0;
+let recursos = [];
+const winningScore = 10;
 
 // escuchador de mouse
 const mouse = {
@@ -95,11 +98,12 @@ function handleDefenders(){
     for (let i = 0; i < defenders.length; i++){
         defenders[i].draw();
         defenders[i].update();
-        if (enemyPositions.indexOf(defenders[i].y) !== -1){
-            defenders[i].shooting = true;
-        } else {
-            defenders[i].shooting = false;
-        }
+        // if (enemyPositions.indexOf(defenders[i].y) !== -1){
+        //     defenders[i].shooting = true;
+        //     return true;
+        // } else {
+        //     defenders[i].shooting = false;
+        // }
         for (let j = 0; j < enemies.length; j++){
             if (defenders[i] && collision(defenders[i], enemies[j])){
                 enemies[j].movement = 0;
@@ -143,7 +147,20 @@ function handleEnemies(){
     }
 }
 //recursos
-
+function handleRecursos(){
+    if (frame % 500 === 0 && score < winningScore){
+        
+        recursos.push(new Monedas());
+    }
+    for (let i = 0; i < recursos.length; i++){
+        recursos[i].draw();
+        if (recursos[i] && mouse.x && mouse.y && collision(recursos[i], mouse)){
+            numberOfResources += recursos[i].amount;
+            recursos.splice(i, 1);
+            i--;
+        }
+    }
+}
 
 //utilidades
 function handleGameStatus(){
@@ -156,6 +173,13 @@ function handleGameStatus(){
         ctx.font = "90px Stick No Bills";
         ctx.fillText("GAME OVER", 153, 330);
     }
+    if (score >= winningScore ){
+        ctx.fillStyle = 'black';
+        ctx.font = '60px Stick no Bilss';
+        ctx.fillText('Salvaste la humanidad', 130, 300);
+        ctx.font = '30px Stick no Bilss';
+        ctx.fillText('Derrotaste todas las variables del covid ' , 134, 340);
+    }
 }
 
 
@@ -166,6 +190,7 @@ function animate(){
     handleGameGrid();
     handleDefenders();
     handleProjectiles();
+    handleRecursos();
     handleEnemies();
     handleGameStatus();
     frame++;
@@ -183,3 +208,8 @@ function collision(first, second){
         return true;
     };
 };
+
+
+window.addEventListener("resize", function(){
+    canvasPosition = canvas.getBoundingClientRect();
+})
