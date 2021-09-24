@@ -15,7 +15,7 @@ let enemiesInterval = 600;
 let frame = 0;
 let gameOver = false;
 const projectiles = [];
-
+let score = 0;
 
 // escuchador de mouse
 const mouse = {
@@ -62,18 +62,25 @@ function handleProjectiles(){
         projectiles[i].update();
         projectiles[i].draw();
         
+        for (let j = 0;j < enemies.length; j++){
+            if (enemies[j] && projectiles[i] && collision(projectiles[i], enemies[j] )){
+                enemies[j].health -= projectiles[i].power;
+                projectiles.splice(i, 1);
+                i--;
+            }
+        }
+
         if (projectiles[i] && projectiles[i].x > canvas.width - cellSize){
             projectiles.splice(i, 1);
             i--;
         }
-        console.log ("proyectiles ", projectiles.length)
     }
 }
 
 //defensa
 canvas.addEventListener("click", function(){
-    const gridPositionX = mouse.x - (mouse.x % cellSize);
-    const gridPositionY = mouse.y - (mouse.y % cellSize);
+    const gridPositionX = mouse.x - (mouse.x % cellSize) +cellGap;
+    const gridPositionY = mouse.y - (mouse.y % cellSize) +cellGap;
     if (gridPositionY < cellSize) return;
     for (let i = 0; i < defenders.length; i++){ // no dejamos defensores en el mismo punto
         if (defenders[i].x === gridPositionX && defenders[i].y === gridPositionY) return;
@@ -88,8 +95,13 @@ function handleDefenders(){
     for (let i = 0; i < defenders.length; i++){
         defenders[i].draw();
         defenders[i].update();
-        for (let j = 0; j < enemies.length; j++) {
-            if (collision(defenders[i], enemies[j])){
+        if (enemyPositions.indexOf(defenders[i].y) !== -1){
+            defenders[i].shooting = true;
+        } else {
+            defenders[i].shooting = false;
+        }
+        for (let j = 0; j < enemies.length; j++){
+            if (defenders[i] && collision(defenders[i], enemies[j])){
                 enemies[j].movement = 0;
                 defenders[i].health -= 1;
             }
@@ -107,8 +119,19 @@ function handleEnemies(){
     for (let i = 0; i < enemies.length; i++){
         enemies[i].update();
         enemies[i].draw();
+
         if (enemies[i].x < 0){
             gameOver = true;
+        }
+        if (enemies[i].health <= 0){
+            let ganarRecursos = enemies[i].maxHealth/10;
+            numberOfResources = numberOfResources + ganarRecursos;
+            score += ganarRecursos;
+            const index = enemyPositions.indexOf(enemies[i].y);
+            enemyPositions.splice(index, 1);
+            enemies.splice(i,1);
+            i--;
+            console.log(enemyPositions);
         }
     }
     if (frame % enemiesInterval === 0) {//intervalos que se gnera el enemigo
@@ -116,6 +139,7 @@ function handleEnemies(){
         enemies.push(new Enemy(verticalPosition));
         enemyPositions.push(verticalPosition);
         if (enemiesInterval > 120) enemiesInterval -= 25;
+        console.log(enemyPositions);
     }
 }
 //recursos
@@ -123,7 +147,8 @@ function handleEnemies(){
 function handleGameStatus(){
     ctx.fillStyle = "Gold";
     ctx.font = "30px Stick No Bills";
-    ctx.fillText("resources: " + numberOfResources, 20,55);
+    ctx.fillText("puntuacion: " + score, 400,55);
+    ctx.fillText("Recursos: " + numberOfResources, 20,55);
     if (gameOver){
         ctx.fillStyle = "black";
         ctx.font = "90px Stick No Bills";
@@ -141,10 +166,8 @@ function animate(){
     handleProjectiles();
     handleEnemies();
     handleGameStatus();
-
-    ctx.fillText("resources: " + numberOfResources, 20,55);
     frame++;
-    console.log(frame);
+
      if (!gameOver) requestAnimationFrame(animate);
 }
 animate();
