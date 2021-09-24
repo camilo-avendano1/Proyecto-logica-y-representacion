@@ -143,6 +143,8 @@ function handleEnemies(){
     }
 }
 //recursos
+
+
 //utilidades
 function handleGameStatus(){
     ctx.fillStyle = "Gold";
