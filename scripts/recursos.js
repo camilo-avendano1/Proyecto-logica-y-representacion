@@ -14,8 +14,6 @@ class Monedas {
         this.spriteHeigth = 130;
     }
     draw(){
-
-
-        ctx.drawImage(this.coinType, this.frameX * this.spritewidth, 0, this.spritewidth, this.spriteHeigth, this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.coinType, this.frameX * this.spritewidth, 0, this.spritewidth, this.spriteHeigth, this.x, this.y, this.width, this.height);
     }
 }

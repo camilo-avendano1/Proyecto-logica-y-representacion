@@ -86,7 +86,7 @@ function handleProjectiles(){
 
 const doctorTypes = []
 const doctor = new Image();
-doctor.src = "../sprites/doctor.png";
+doctor.src = "./sprites/doctor.png";
 doctorTypes.push(doctor);
 
 
@@ -130,7 +130,7 @@ function handleDefenders(){
 //generador  de enemigos
 const enemyTypes = []
 const virus = new Image();
-virus.src = "../sprites/virus.png";
+virus.src = "./sprites/virus.png";
 enemyTypes.push(virus);
 
 function handleEnemies(){
@@ -149,7 +149,6 @@ function handleEnemies(){
             enemyPositions.splice(index, 1);
             enemies.splice(i,1);
             i--;
-            console.log(enemyPositions);
         }
     }
     if (frame % enemiesInterval === 0) {//intervalos que se gnera el enemigo
@@ -164,7 +163,7 @@ function handleEnemies(){
 
 const coinTypes = []
 const coin = new Image();
-coin.src = "../sprites/coin.png";
+coin.src = "./sprites/coin.png";
 coinTypes.push(coin);
 
 

@@ -26,9 +26,7 @@ class Enemy{
 
     }
     draw(){
-
-
-        ctx.drawImage(this.enemyType, this.frameX * this.spritewidth, 0, this.spritewidth, this.spriteHeigth, this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.enemyType, this.frameX * this.spritewidth, 0, this.spritewidth, this.spriteHeigth, this.x, this.y, this.width, this.height);
     }
     
 }
