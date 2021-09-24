@@ -3,6 +3,8 @@ const ctx = canvas.getContext("2d");
 canvas.width = 900;
 canvas.height = 600;
 
+  
+
 //variables globales
 const amounts = [20,30,40];
 const cellSize = 100;
@@ -18,7 +20,7 @@ let gameOver = false;
 const projectiles = [];
 let score = 0;
 let recursos = [];
-const winningScore = 10;
+const winningScore = 100;
 
 // escuchador de mouse
 const mouse = {
@@ -81,6 +83,13 @@ function handleProjectiles(){
 }
 
 //defensa
+
+const doctorTypes = []
+const doctor = new Image();
+doctor.src = "../sprites/doctor.png";
+doctorTypes.push(doctor);
+
+
 canvas.addEventListener("click", function(){
     const gridPositionX = mouse.x - (mouse.x % cellSize) +cellGap;
     const gridPositionY = mouse.y - (mouse.y % cellSize) +cellGap;
@@ -119,6 +128,11 @@ function handleDefenders(){
 }
 //enemigos
 //generador  de enemigos
+const enemyTypes = []
+const virus = new Image();
+virus.src = "../sprites/virus.png";
+enemyTypes.push(virus);
+
 function handleEnemies(){
     for (let i = 0; i < enemies.length; i++){
         enemies[i].update();
@@ -147,6 +161,13 @@ function handleEnemies(){
     }
 }
 //recursos
+
+const coinTypes = []
+const coin = new Image();
+coin.src = "../sprites/coin.png";
+coinTypes.push(coin);
+
+
 function handleRecursos(){
     if (frame % 400 === 0 ){
         

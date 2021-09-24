@@ -5,12 +5,17 @@ class Monedas {
         this.width = cellSize * 0.6;
         this.height = cellSize * 0.6;
         this.amount = amounts[Math.floor(Math.random()) * amounts.length];
+        this.coinType = coinTypes[0];
+        this.frameX = 0;
+        this.frameY = 0;
+        this.minFrame = 0;
+        this.maxFrame = 4;
+        this.spritewidth = 160;
+        this.spriteHeigth = 130;
     }
     draw(){
-        ctx.fillStyle = 'yellow';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = 'black';
-        ctx.font = '20px Stick no Bills';
-        ctx.fillText(this.amount, this.x + 15, this.y + 25);
+
+
+        ctx.drawImage(this.coinType, this.frameX * this.spritewidth, 0, this.spritewidth, this.spriteHeigth, this.x, this.y, this.width, this.height);
     }
 }

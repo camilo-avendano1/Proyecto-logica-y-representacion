@@ -8,15 +8,28 @@ class Defender{
         this.health = 100;
         this.projectiles = [];
         this.timer = 0;
+        this.doctorType = doctorTypes[0];
+        this.frameX = 0;
+        this.frameY = 0;
+        this.minFrame = 0;
+        this.maxFrame = 4;
+        this.spritewidth = 149;
+        this.spriteHeigth = 100;
     }//dibujar defensor
     draw(){
-        ctx.fillStyle = "blue";
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+
+
         ctx.fillStyle = "gold";
         ctx.font = "20px Stick No Bills";
-        ctx.fillText(Math.floor(this.health),this.x + 15,this.y + 30); 
+
+        ctx.drawImage(this.doctorType, this.frameX * this.spritewidth, 0, this.spritewidth, this.spriteHeigth, this.x, this.y, this.width, this.height);
     }
     update(){
+
+        if (frame % 25 === 0) {
+            if (this.frameX < this.maxFrame) this.frameX++;
+            else this.frameX = this.minFrame;
+        }
   
             this.timer++;
             if (this.timer % 100 === 0){
