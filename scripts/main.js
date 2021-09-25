@@ -3,7 +3,7 @@ const ctx = canvas.getContext("2d");
 canvas.width = 900;
 canvas.height = 600;
 
-  
+
 
 //variables globales
 const amounts = [20,30,40];
@@ -12,15 +12,18 @@ const cellGap = 3;
 const gameGrid = [];
 const defenders = [];
 const enemies = [];
-let numberOfResources = 300;
 const enemyPositions = [];
+const projectiles = [];
+const winningScore = 100;
+
+let recursos = [];
+let numberOfResources = 300;
 let enemiesInterval = 600;
 let frame = 0;
 let gameOver = false;
-const projectiles = [];
 let score = 0;
-let recursos = [];
-const winningScore = 100;
+
+
 
 // escuchador de mouse
 const mouse = {
@@ -99,7 +102,7 @@ canvas.addEventListener("click", function(){
     }
     let defendersCost = 100;
     if (numberOfResources >= defendersCost) {
-        defenders.push(new Defender(gridPositionX, gridPositionY));
+        defenders.push(new Doctor(gridPositionX, gridPositionY));
         numberOfResources -= defendersCost;
     }
 });
@@ -153,7 +156,7 @@ function handleEnemies(){
     }
     if (frame % enemiesInterval === 0) {//intervalos que se gnera el enemigo
         let verticalPosition = Math.floor(Math.random()* 5 + 1 )* cellSize;
-        enemies.push(new Enemy(verticalPosition));
+        enemies.push(new Virus(verticalPosition));
         enemyPositions.push(verticalPosition);
         if (enemiesInterval > 120) enemiesInterval -= 25;
         console.log(enemyPositions);
@@ -205,7 +208,7 @@ function handleGameStatus(){
 
 function animate(){
     ctx.clearRect(0,0, canvas.width, canvas.height)
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = "#9900FF";
     ctx.fillRect(0,0, controlsBar.width, controlsBar.height);
     handleGameGrid();
     handleDefenders();
@@ -233,3 +236,6 @@ function collision(first, second){
 window.addEventListener("resize", function(){
     canvasPosition = canvas.getBoundingClientRect();
 })
+
+console.log(gameGrid);
+

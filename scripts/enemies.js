@@ -1,4 +1,4 @@
-class Enemy{
+class Virus{
     constructor(verticalPosition){
         this.x = canvas.width;
         this.y = verticalPosition;
