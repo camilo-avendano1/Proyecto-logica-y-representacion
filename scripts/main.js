@@ -218,7 +218,9 @@ function animate(){
     handleGameStatus();
     frame++;
 
-     if (!gameOver) requestAnimationFrame(animate);
+     if (winningScore > score ){
+        if (!gameOver) requestAnimationFrame(animate);
+     }
 }
 animate();
 
